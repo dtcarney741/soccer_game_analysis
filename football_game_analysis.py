@@ -2,8 +2,10 @@ import football_game_data as fgd
 import os
 import football_game_reports
 
-def choose_file():
-    allFiles = [f for f in os.listdir('.') if os.path.isfile(f)]
+DATA_FILE_FOLDER = './game_files/'
+
+def choose_file(folder):
+    allFiles = [f for f in os.listdir(folder) if os.path.isfile(folder+f)]
     filteredFiles = []
     i = 0
     for f in allFiles:
@@ -20,7 +22,7 @@ def choose_file():
     except ValueError:
         fileName = choice
         
-    return(fileName)
+    return(folder+fileName)
     
 def print_results_by_half(stat, list):
     COL1 = 30
@@ -56,7 +58,8 @@ def print_results(stat, list):
         print(stat.rjust(COL1), list[0].center(COL2-COL1), list[1].center(COL3-COL2))
 
         
-fileName = choose_file()
+fileName = choose_file(DATA_FILE_FOLDER)
+print("File Chosen = ",fileName)
 
 g1 = fgd.Game_Data(fileName)
 #try:
