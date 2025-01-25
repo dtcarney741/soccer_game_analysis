@@ -5,24 +5,24 @@ import football_game_reports
 DATA_FILE_FOLDER = './game_files/'
 
 def choose_file(folder):
-    allFiles = [f for f in os.listdir(folder) if os.path.isfile(folder+f)]
-    filteredFiles = []
+    all_files = [f for f in os.listdir(folder) if os.path.isfile(folder+f)]
+    filtered_files = []
     i = 0
-    for f in allFiles:
-        fileExtension = f.partition('.')[2]
-        if fileExtension == "csv":
+    for f in all_files:
+        file_extension = f.partition('.')[2]
+        if file_extension == "csv":
             print("(",i,")",f)
-            filteredFiles.append(f)
+            filtered_files.append(f)
             i = i + 1
 
     choice = input("Choose file to analyze by index or type filename: ")
     try:
         index = int(choice)
-        fileName = filteredFiles[index]
+        file_name = filtered_files[index]
     except ValueError:
-        fileName = choice
+        file_name = choice
         
-    return(folder+fileName)
+    return(folder+file_name)
     
 def print_results_by_half(stat, list):
     COL1 = 30
@@ -35,9 +35,9 @@ def print_results_by_half(stat, list):
             list[i] = str(list[i])
             
     if (stat == "HEADER"):
-        homeTeam = list[0].center(COL3-COL1," ")
-        awayTeam = list[1].center(COL4-COL2," ")
-        print(str(" ").rjust(COL1), homeTeam,awayTeam)
+        home_team = list[0].center(COL3-COL1," ")
+        away_team = list[1].center(COL4-COL2," ")
+        print(str(" ").rjust(COL1), home_team,away_team)
         print(str("H1").rjust(int(COL1+(COL2-COL1)/2)), str("H2").rjust(COL2-COL1), str("H1").rjust(COL3-COL2), str("H2").rjust(COL4-COL3))
     else:
         print(stat.rjust(COL1), list[0].center(COL2-COL1), list[1].center(COL3-COL2), list[2].center(COL4-COL3), list[3].center(COL5-COL4))
@@ -51,21 +51,21 @@ def print_results(stat, list):
             list[i] = str(list[i])
             
     if (stat == "HEADER"):
-        homeTeam = list[0].center(COL2-COL1," ")
-        awayTeam = list[1].center(COL3-COL2," ")
-        print(str(" ").rjust(COL1), homeTeam,awayTeam)
+        home_team = list[0].center(COL2-COL1," ")
+        away_team = list[1].center(COL3-COL2," ")
+        print(str(" ").rjust(COL1), home_team,away_team)
     else:
         print(stat.rjust(COL1), list[0].center(COL2-COL1), list[1].center(COL3-COL2))
 
         
-fileName = choose_file(DATA_FILE_FOLDER)
-print("File Chosen = ",fileName)
+file_name = choose_file(DATA_FILE_FOLDER)
+print("File Chosen = ",file_name)
 
-g1 = fgd.Game_Data(fileName)
+g1 = fgd.Game_Data(file_name)
 #try:
-#    g1 = fgd.Game_Data(fileName)
+#    g1 = fgd.Game_Data(file_name)
 #except:
-#    print("ERROR: Unable to import ", fileName)
+#    print("ERROR: Unable to import ", file_name)
 #    quit()
 
 choice = ''
@@ -81,36 +81,36 @@ while (choice.upper() != 'Q'):
     
     if (choice.upper() == 'S'):
         print("")
-        print_results("HEADER", [g1.homeTeam,g1.awayTeam])
+        print_results("HEADER", [g1.home_team,g1.away_team])
         print_results("Score", [g1.final_home_team_score(), g1.final_away_team_score()])
-        if (g1.homeTeamPenaltyShootoutGoals != "NA"):
-            print_results("Penalty Shootout", [g1.homeTeamPenaltyShootoutGoals, g1.awayTeamPenaltyShootoutGoals])
+        if (g1.homeTeamPenalty_shootout_goals != "NA"):
+            print_results("Penalty Shootout", [g1.homeTeamPenalty_shootout_goals, g1.awayTeamPenalty_shootout_goals])
 
     elif (choice.upper() == 'G'):
         print("")
-        print_results_by_half("HEADER", [g1.homeTeam,g1.awayTeam])
-        print_results_by_half("Goals", [g1.homeTeamGoals["H1"],g1.homeTeamGoals["H2"],g1.awayTeamGoals["H1"],g1.awayTeamGoals["H2"]])
-        print_results_by_half("Assists", [g1.homeTeamAssists["H1"],g1.homeTeamAssists["H2"],g1.awayTeamAssists["H1"],g1.awayTeamAssists["H2"]])
-        print_results_by_half("Shots", [g1.homeTeamShots["H1"],g1.homeTeamShots["H2"],g1.awayTeamShots["H1"],g1.awayTeamShots["H2"]])        
-        print_results_by_half("Saves", [g1.homeTeamSaves["H1"],g1.homeTeamSaves["H2"],g1.awayTeamSaves["H1"],g1.awayTeamSaves["H2"]])
-        print_results_by_half("Corners",[g1.homeTeamCorners["H1"],g1.homeTeamCorners["H2"],g1.awayTeamCorners["H1"],g1.awayTeamCorners["H2"]])
-        print_results_by_half("Yellow Cards", [g1.homeTeamYellowCards["H1"],g1.homeTeamYellowCards["H2"],g1.awayTeamYellowCards["H1"],g1.awayTeamYellowCards["H2"]])
-        print_results_by_half("Red Cards", [g1.homeTeamRedCards["H1"],g1.homeTeamRedCards["H2"],g1.awayTeamRedCards["H1"],g1.awayTeamRedCards["H2"]])
-        print_results_by_half("Formation", [g1.homeTeamFormationName["H1"],g1.homeTeamFormationName["H2"],g1.awayTeamFormationName["H1"],g1.awayTeamFormationName["H2"]])
+        print_results_by_half("HEADER", [g1.home_team,g1.away_team])
+        print_results_by_half("Goals", [g1.home_team_goals["H1"],g1.home_team_goals["H2"],g1.away_team_goals["H1"],g1.away_team_goals["H2"]])
+        print_results_by_half("Assists", [g1.home_team_assists["H1"],g1.home_team_assists["H2"],g1.away_team_assists["H1"],g1.away_team_assists["H2"]])
+        print_results_by_half("Shots", [g1.home_team_shots["H1"],g1.home_team_shots["H2"],g1.away_team_shots["H1"],g1.away_team_shots["H2"]])        
+        print_results_by_half("Saves", [g1.home_team_saves["H1"],g1.home_team_saves["H2"],g1.away_team_saves["H1"],g1.away_team_saves["H2"]])
+        print_results_by_half("Corners",[g1.home_team_corners["H1"],g1.home_team_corners["H2"],g1.away_team_corners["H1"],g1.away_team_corners["H2"]])
+        print_results_by_half("Yellow Cards", [g1.homeTeam_yellow_cards["H1"],g1.homeTeam_yellow_cards["H2"],g1.awayTeam_yellow_cards["H1"],g1.awayTeam_yellow_cards["H2"]])
+        print_results_by_half("Red Cards", [g1.homeTeam_red_cards["H1"],g1.homeTeam_red_cards["H2"],g1.awayTeam_red_cards["H1"],g1.awayTeam_red_cards["H2"]])
+        print_results_by_half("Formation", [g1.homeTeam_formation_name["H1"],g1.homeTeam_formation_name["H2"],g1.awayTeam_formation_name["H1"],g1.awayTeam_formation_name["H2"]])
                 
         print("")
         print("Coach comments H1:")
         for comment in g1.homeTeamH1Comments:
-            print("\t", g1.homeTeam, ": ", comment)
+            print("\t", g1.home_team, ": ", comment)
         for comment in g1.awayTeamH1Comments:
-            print("\t", g1.awayTeam, ": ", comment)
+            print("\t", g1.away_team, ": ", comment)
 
         print("")
         print("Coach comments H2:")
         for comment in g1.homeTeamH2Comments:
-            print("\t", g1.homeTeam, ": ", comment)
+            print("\t", g1.home_team, ": ", comment)
         for comment in g1.awayTeamH2Comments:
-            print("\t", g1.awayTeam, ": ", comment)
+            print("\t", g1.away_team, ": ", comment)
             
     elif (choice.upper() == 'P'):
         team = input("(H)ome or (A)way? ")
@@ -123,59 +123,59 @@ while (choice.upper() != 'Q'):
             g1.draw_passing_graph(team.upper(),half,weight,False)
     elif (choice.upper() == 'A'):
         print("")
-        print_results_by_half("HEADER", [g1.homeTeam,g1.awayTeam])
-        print_results_by_half("Possession Instances", [g1.homeTeamH1PassingStats.possessionInstances, g1.homeTeamH2PassingStats.possessionInstances, g1.awayTeamH1PassingStats.possessionInstances, g1.awayTeamH2PassingStats.possessionInstances])
-        print_results_by_half("Max Consecutive Passes", [g1.homeTeamH1PassingStats.maxConsecutivePasses, g1.homeTeamH2PassingStats.maxConsecutivePasses, g1.awayTeamH1PassingStats.maxConsecutivePasses, g1.awayTeamH2PassingStats.maxConsecutivePasses])
+        print_results_by_half("HEADER", [g1.home_team,g1.away_team])
+        print_results_by_half("Possession Instances", [g1.homeTeamH1Passing_stats.possession_instances, g1.homeTeamH2Passing_stats.possession_instances, g1.awayTeamH1Passing_stats.possession_instances, g1.awayTeamH2Passing_stats.possession_instances])
+        print_results_by_half("Max Consecutive Passes", [g1.homeTeamH1Passing_stats.max_consecutive_passes, g1.homeTeamH2Passing_stats.max_consecutive_passes, g1.awayTeamH1Passing_stats.max_consecutive_passes, g1.awayTeamH2Passing_stats.max_consecutive_passes])
         print_results_by_half("Passing Rate (passes/min)", [round(g1.home_team_passing_rate('H1'),2), round(g1.home_team_passing_rate('H2'),2), round(g1.away_team_passing_rate('H1'),2), round(g1.away_team_passing_rate('H2'),2)])
-        htH1Roots = g1.homeTeamH1PassingStats.passing_roots()
-        htH2Roots = g1.homeTeamH2PassingStats.passing_roots()
-        atH1Roots = g1.awayTeamH1PassingStats.passing_roots()
-        atH2Roots = g1.awayTeamH2PassingStats.passing_roots()
+        ht_H1_roots = g1.homeTeamH1Passing_stats.passing_roots()
+        ht_H2_roots = g1.homeTeamH2Passing_stats.passing_roots()
+        at_H1_roots = g1.awayTeamH1Passing_stats.passing_roots()
+        at_H2_roots = g1.awayTeamH2Passing_stats.passing_roots()
         for i in range(5):
             stat = "Top Passing Root " + str(i+1)
-            statList = []
-            if len(htH1Roots) > i:
-                statList.append(htH1Roots[i][0] + "-" + str(htH1Roots[i][1]))
+            stat_list = []
+            if len(ht_H1_roots) > i:
+                stat_list.append(ht_H1_roots[i][0] + "-" + str(ht_H1_roots[i][1]))
             else:
-                statList.append("NA")
-            if len(htH2Roots) > i:
-                statList.append(htH2Roots[i][0] + "-" + str(htH2Roots[i][1]))
+                stat_list.append("NA")
+            if len(ht_H2_roots) > i:
+                stat_list.append(ht_H2_roots[i][0] + "-" + str(ht_H2_roots[i][1]))
             else:
-                statList.append("NA")
-            if len(atH1Roots) > i:
-                statList.append(atH1Roots[i][0] + "-" + str(atH1Roots[i][1]))
+                stat_list.append("NA")
+            if len(at_H1_roots) > i:
+                stat_list.append(at_H1_roots[i][0] + "-" + str(at_H1_roots[i][1]))
             else:
-                statList.append("NA")
-            if len(atH2Roots) > i:
-                statList.append(atH2Roots[i][0] + "-" + str(atH2Roots[i][1]))
+                stat_list.append("NA")
+            if len(at_H2_roots) > i:
+                stat_list.append(at_H2_roots[i][0] + "-" + str(at_H2_roots[i][1]))
             else:
-                statList.append("NA")            
-            print_results_by_half(stat, statList)
+                stat_list.append("NA")            
+            print_results_by_half(stat, stat_list)
         
-        htH1Tips = g1.homeTeamH1PassingStats.passing_tips()
-        htH2Tips = g1.homeTeamH2PassingStats.passing_tips()
-        atH1Tips = g1.awayTeamH1PassingStats.passing_tips()
-        atH2Tips = g1.awayTeamH2PassingStats.passing_tips()
+        ht_H1_tips = g1.homeTeamH1Passing_stats.passing_tips()
+        ht_H2_tips = g1.homeTeamH2Passing_stats.passing_tips()
+        at_H1_tips = g1.awayTeamH1Passing_stats.passing_tips()
+        at_H2_tips = g1.awayTeamH2Passing_stats.passing_tips()
         for i in range (5):
             stat = "Player Possession Ends At " + str(i+1)
-            statList = []
-            if len(htH1Tips) > i:
-                statList.append(htH1Tips[i][0] + "-" + str(htH1Tips[i][1]))
+            stat_list = []
+            if len(ht_H1_tips) > i:
+                stat_list.append(ht_H1_tips[i][0] + "-" + str(ht_H1_tips[i][1]))
             else:
-                statList.append("NA")
-            if len(htH2Tips) > i:
-                statList.append(htH2Tips[i][0] + "-" + str(htH2Tips[i][1]))
+                stat_list.append("NA")
+            if len(ht_H2_tips) > i:
+                stat_list.append(ht_H2_tips[i][0] + "-" + str(ht_H2_tips[i][1]))
             else:
-                statList.append("NA")
-            if len(atH1Tips) > i:
-                statList.append(atH1Tips[i][0] + "-" + str(atH1Tips[i][1]))
+                stat_list.append("NA")
+            if len(at_H1_tips) > i:
+                stat_list.append(at_H1_tips[i][0] + "-" + str(at_H1_tips[i][1]))
             else:
-                statList.append("NA")
-            if len(atH2Tips) > i:
-                statList.append(atH2Tips[i][0] + "-" + str(atH2Tips[i][1]))
+                stat_list.append("NA")
+            if len(at_H2_tips) > i:
+                stat_list.append(at_H2_tips[i][0] + "-" + str(at_H2_tips[i][1]))
             else:
-                statList.append("NA")
-            print_results_by_half(stat, statList)
+                stat_list.append("NA")
+            print_results_by_half(stat, stat_list)
                 
         print_results_by_half("Top Passer", [g1.home_team_top_passer("H1")[0]+"-"+str(g1.home_team_top_passer("H1")[1]), g1.home_team_top_passer("H2")[0]+"-"+str(g1.home_team_top_passer("H2")[1]), g1.away_team_top_passer("H1")[0]+"-"+str(g1.away_team_top_passer("H1")[1]), g1.away_team_top_passer("H2")[0]+"-"+str(g1.away_team_top_passer("H2")[1])])
         print_results_by_half("Team Passing Hub", [g1.home_team_hub_player("H1")[0]+"-"+str(g1.home_team_hub_player("H1")[1]), g1.home_team_hub_player("H2")[0]+"-"+str(g1.home_team_hub_player("H2")[1]), g1.away_team_hub_player("H1")[0]+"-"+str(g1.away_team_hub_player("H1")[1]), g1.away_team_hub_player("H2")[0]+"-"+str(g1.away_team_hub_player("H2")[1])])
@@ -184,19 +184,19 @@ while (choice.upper() != 'Q'):
         g1.draw_passing_sequence_histogram(half, 1, 10)
     elif (choice.upper() == 'H'):
         print("")
-        print_results_by_half("HEADER", [g1.homeTeam,g1.awayTeam])
-        print_results_by_half("Goals", [g1.homeTeamH1HeatMapStats.total_goals(), g1.homeTeamH2HeatMapStats.total_goals(), g1.awayTeamH1HeatMapStats.total_goals(), g1.awayTeamH2HeatMapStats.total_goals()])
-        print_results_by_half("Assists", [g1.homeTeamH1HeatMapStats.total_assists(), g1.homeTeamH2HeatMapStats.total_assists(), g1.awayTeamH1HeatMapStats.total_assists(), g1.awayTeamH2HeatMapStats.total_assists()])
-        print_results_by_half("Shots", [g1.homeTeamH1HeatMapStats.total_shots(), g1.homeTeamH2HeatMapStats.total_shots(), g1.awayTeamH1HeatMapStats.total_shots(), g1.awayTeamH2HeatMapStats.total_shots()])
-        print_results_by_half("Shots on Target", [g1.homeTeamH1HeatMapStats.total_shots_on_target(), g1.homeTeamH2HeatMapStats.total_shots_on_target(), g1.awayTeamH1HeatMapStats.total_shots_on_target(), g1.awayTeamH2HeatMapStats.total_shots_on_target()])
-        print_results_by_half("Possession Instances", [g1.homeTeamH1HeatMapStats.total_possession_instances(), g1.homeTeamH2HeatMapStats.total_possession_instances(), g1.awayTeamH1HeatMapStats.total_possession_instances(), g1.awayTeamH2HeatMapStats.total_possession_instances()])
+        print_results_by_half("HEADER", [g1.home_team,g1.away_team])
+        print_results_by_half("Goals", [g1.homeTeamH1Heat_map_stats.total_goals(), g1.homeTeamH2Heat_map_stats.total_goals(), g1.awayTeamH1Heat_map_stats.total_goals(), g1.awayTeamH2Heat_map_stats.total_goals()])
+        print_results_by_half("Assists", [g1.homeTeamH1Heat_map_stats.total_assists(), g1.homeTeamH2Heat_map_stats.total_assists(), g1.awayTeamH1Heat_map_stats.total_assists(), g1.awayTeamH2Heat_map_stats.total_assists()])
+        print_results_by_half("Shots", [g1.homeTeamH1Heat_map_stats.total_shots(), g1.homeTeamH2Heat_map_stats.total_shots(), g1.awayTeamH1Heat_map_stats.total_shots(), g1.awayTeamH2Heat_map_stats.total_shots()])
+        print_results_by_half("Shots on Target", [g1.homeTeamH1Heat_map_stats.total_shots_on_target(), g1.homeTeamH2Heat_map_stats.total_shots_on_target(), g1.awayTeamH1Heat_map_stats.total_shots_on_target(), g1.awayTeamH2Heat_map_stats.total_shots_on_target()])
+        print_results_by_half("Possession Instances", [g1.homeTeamH1Heat_map_stats.total_possession_instances(), g1.homeTeamH2Heat_map_stats.total_possession_instances(), g1.awayTeamH1Heat_map_stats.total_possession_instances(), g1.awayTeamH2Heat_map_stats.total_possession_instances()])
         print_results_by_half("Passing Rate (passes/min)", [round(g1.home_team_passing_rate_from_heat_map('H1'),2), round(g1.home_team_passing_rate_from_heat_map('H2'),2), round(g1.away_team_passing_rate_from_heat_map('H1'),2), round(g1.away_team_passing_rate_from_heat_map('H2'),2)])
-        print_results_by_half("Max Consecutive Passes", [g1.homeTeamH1PassingStats.maxConsecutivePasses, g1.homeTeamH2PassingStats.maxConsecutivePasses, g1.awayTeamH1PassingStats.maxConsecutivePasses, g1.awayTeamH2PassingStats.maxConsecutivePasses])
+        print_results_by_half("Max Consecutive Passes", [g1.homeTeamH1Passing_stats.max_consecutive_passes, g1.homeTeamH2Passing_stats.max_consecutive_passes, g1.awayTeamH1Passing_stats.max_consecutive_passes, g1.awayTeamH2Passing_stats.max_consecutive_passes])
     elif (choice.upper() == 'M'):
         team = input("(H)ome or (A)way or (B)oth? ")
         half = int(input("(1)st Half or (2)nd Half? "))
-        mapType = input("(S)hot, (P)ass, (l)ost Possession? ")
-        g1.draw_heat_map(team.upper(),half,mapType.upper())
+        map_type = input("(S)hot, (P)ass, (l)ost Possession? ")
+        g1.draw_heat_map(team.upper(),half,map_type.upper())
     elif (choice == "1"):
         reports_object = football_game_reports.football_game_reports(g1)
         reports_object.create_report_from_template("report.docx")

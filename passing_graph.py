@@ -2,7 +2,7 @@ import networkx as nx
 import numpy as np
 import matplotlib.pyplot as plt
 
-G = nx.DiGraph()
+G = nx.Di_graph()
 G.add_nodes_from([1,4,5,7,11,10])
 G.add_weighted_edges_from([(1,5,3)])
 G.add_weighted_edges_from([(5,1,2)])
